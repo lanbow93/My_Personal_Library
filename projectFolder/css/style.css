@@ -3,7 +3,6 @@ body {
     padding: 0;
     height: 100vh;  /*viewport height*/
     display: grid;
-    grid-template: 1fr 3fr 1fr / 1fr 4fr;
     font-family: Arial;
     background-color: rgba(195, 195, 195, 0.84);
     flex-wrap: wrap;
@@ -23,10 +22,30 @@ body {
     border-style: dashed;
 }
 
+img {
+    object-fit: contain;
+    justify-self: center;
+    align-self: center;    
+    height: 90%;
+}
+
 #searchForm {
     display: grid;
     grid-area: 3 / 3 / 4 / 3;
     border-style: dashed;
+    text-align: center;
+    font-size: 3vh;
+}
+input{
+    font-size: 2vh;
+}
+li {
+    margin-bottom: 2vh;
+    font-size: 2vh;
+}
+
+#bookTitle {
+    font-weight: bold;
 }
 
 #thumbnail {
@@ -45,6 +64,13 @@ body {
     display: grid;
     grid-area: 7 / 3 / 8 / 3 ;
     border-style: dashed;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+
+
 }
 
 
