@@ -4,6 +4,7 @@
 // Variables that will be used later
 let userInput;
 let bookData;
+let bookArray = [];
 
 //Areas I will need to grab or push data from frequently
 const $frequentLocations = {
@@ -18,6 +19,21 @@ const $frequentLocations = {
 }
 $frequentLocations.searchResults.append(`<li>Title: <span id='bookTitle'>Green Eggs and Ham</span><br>Author: Dr. Seuss</li>`)
 
+// Iterating though list of books and adding them to screen
+function listBooks(){
+    $frequentLocations.searchResults.empty();
+    counter = 0;
+    for (let book of bookData.items){
+        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span id='bookTitle'>${book.volumeInfo.title}</span><br>Author(s): ${book.volumeInfo.authors}</li>`)
+        let hold = "a" + counter;
+        bookArray.push({
+            [hold]: book.id
+        })
+        counter++
+    }
+    console.log(bookArray)
+}
+
 // What happens when book title is submitted
 function searchBook(event) {
     event.preventDefault()
@@ -31,13 +47,13 @@ function searchBook(event) {
     Promise.then(
         (data) => {
             bookData = data
-            
+            listBooks();
+
         },
         (error) => {
             console.log(error)
         }
     )
-
 }
 
 // Click listener on the search box to look up book results

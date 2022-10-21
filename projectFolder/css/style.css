@@ -36,9 +36,15 @@ img {
 input{
     font-size: 2vh;
 }
+
+
+ul{
+    align-self: flex-start;
+}
 li {
     margin-bottom: 2vh;
     font-size: 2vh;
+    
 }
 
 #bookTitle {
@@ -63,9 +69,11 @@ li {
     text-align: center;
 }
 
-ul {
-    display: flex;
-    flex-direction: column;
+
+
+ul, #resultsLabel{
+    display: grid;
+    grid-row-start: 1;
 }
 select {
     font-size: .75vh;
