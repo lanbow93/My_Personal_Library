@@ -21,17 +21,21 @@ $frequentLocations.searchResults.append(`<li>Title: <span id='bookTitle'>Green E
 
 // Iterating though list of books and adding them to screen
 function listBooks(){
+    // Clears out the current displayed results
     $frequentLocations.searchResults.empty();
+    // Empties book array of their identifiers
+    bookArray = [];
+    // Initializes counter that will be used to give each element a unique ID
     counter = 0;
     for (let book of bookData.items){
         $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span id='bookTitle'>${book.volumeInfo.title}</span><br>Author(s): ${book.volumeInfo.authors}</li>`)
-        let hold = "a" + counter;
+        //Pushing a key value pair to later access if user wants more info
         bookArray.push({
-            [hold]: book.id
+            ["a"+counter]: book.id
         })
         counter++
     }
-    console.log(bookArray)
+    
 }
 
 // What happens when book title is submitted
