@@ -13,13 +13,11 @@ body {
     display: grid;
     grid-area: 2 / 2 / 2 / 6;
     text-align: center;
-    border-style: dashed;
 }
 
 #searchResults {
     display: grid;
     grid-area: 3 / 2 / 8 / 2;
-    border-style: dashed;
 }
 
 img {
@@ -32,7 +30,6 @@ img {
 #searchForm {
     display: grid;
     grid-area: 3 / 3 / 4 / 3;
-    border-style: dashed;
     text-align: center;
     font-size: 3vh;
 }
@@ -51,26 +48,40 @@ li {
 #thumbnail {
     display: grid;
     grid-area: 4 / 3 / 6 / 3;
-    border-style: dashed;
 }
 
 #bookInformation {
     display: grid;
     grid-area: 6 / 3 / 7 / 3;
-    border-style: dashed;
+    text-align: center;
+    font-size: 1.5vh;
 }
 
 #addForm {
     display: grid;
     grid-area: 7 / 3 / 8 / 3 ;
-    border-style: dashed;
+    text-align: center;
 }
 
 ul {
     display: flex;
     flex-direction: column;
-
-
+}
+select {
+    font-size: .75vh;
+    width: 90%;
+    display: inline-flex;
+    justify-self: center;
 }
 
+#dropButton {
+    font-size: 2vh;
+    margin-top: .5vh;
+    width: 80%;
+    height: 80%;
+    justify-self: center;
+}
+label {
+    font-size: 3vh;
+}
 
