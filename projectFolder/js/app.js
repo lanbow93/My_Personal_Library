@@ -28,7 +28,7 @@ function listBooks(){
     // Initializes counter that will be used to give each element a unique ID
     counter = 0;
     for (let book of bookData.items){
-        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span id='bookTitle'>${book.volumeInfo.title}</span><br>Author(s): ${book.volumeInfo.authors}</li>`)
+        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span id='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors[0]}</li>`)
         //Pushing a key value pair to later access if user wants more info
         bookArray.push({
             ["a"+counter]: book.id
