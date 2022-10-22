@@ -4,7 +4,7 @@ body {
     height: 100vh;  /*viewport height*/
     display: grid;
     font-family: Arial;
-    background-color: rgba(195, 195, 195, 0.84);
+    background-color: #f2eecb;
     flex-wrap: wrap;
     grid-template: .125fr .5fr 1fr 1fr 1fr 1fr 1fr .125fr / .125fr 1fr 1fr 1fr 1fr .125fr;
 }

@@ -30,14 +30,8 @@ function updateScreenInformation(bookObj){
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
     $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
     
-    if (descriptionList[currentEventId] !== undefined) {
-        $frequentLocations.searchDescription.text(descriptionList[currentEventId].textSnippet);
-        console.log(descriptionList[currentEventId].textSnippet)
-    } else {
-        console.log("Not Here")
-        $frequentLocations.searchDescription.html(bookObj.volumeInfo.description)
-        
-    }
+    $frequentLocations.searchDescription.text(descriptionList[currentEventId].split('').splice(0, 450).join('') + " ...")
+    console.log()
 
     // If book author returns back undefined
     if (bookObj.volumeInfo.authors !== undefined) {
@@ -83,6 +77,7 @@ function moreInfo(event) {
         )
     }
 }
+
 // Iterating though list of books and adding them to screen
 function listBooks(){
     // Clears out the current displayed results
@@ -101,8 +96,7 @@ function listBooks(){
 
         //Pushing a key value pair to later access if user wants more info
         bookList["a"+counter] = book.id
-        descriptionList["a"+counter] = book.searchInfo
-        console.log(book.searchInfo)
+        descriptionList["a"+counter] = book.volumeInfo.description
         counter++
 
     }
