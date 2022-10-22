@@ -6,6 +6,7 @@ let userInput;
 let bookData;
 let bookList = {};
 let descriptionList= {};
+let currentEventId;
 
 //Areas I will need to grab or push data from frequently
 const $frequentLocations = {
@@ -25,13 +26,20 @@ $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>Gree
 
 // Updatting the area with full book information
 function updateScreenInformation(bookObj){
-
-    console.log("Break");
     $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
     $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
-    let test = (bookObj.volumeInfo.description).split('').splice(0,150).join('')
-    $frequentLocations.searchDescription.html(bookObj.volumeInfo.description)
+    
+    if (descriptionList[currentEventId] !== undefined) {
+        $frequentLocations.searchDescription.text(descriptionList[currentEventId].textSnippet);
+        console.log(descriptionList[currentEventId].textSnippet)
+    } else {
+        console.log("Not Here")
+        $frequentLocations.searchDescription.html(bookObj.volumeInfo.description)
+        
+    }
+
+    // If book author returns back undefined
     if (bookObj.volumeInfo.authors !== undefined) {
     $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
     } else {
@@ -39,7 +47,7 @@ function updateScreenInformation(bookObj){
     }
     
     
-    console.log()
+    console.log(currentEventId)
 }
 
 // Function to grab list item clicked, and use the ID to retireve the thumbnail and description
@@ -52,6 +60,7 @@ function moreInfo(event) {
         })
         promise.then(
             (Data) => {
+                currentEventId = event.currentTarget.id;
                 updateScreenInformation(Data)
             },
             (Error) => {
@@ -65,7 +74,7 @@ function moreInfo(event) {
         })
         promise.then(
             (Data) => {
-                console.log(Data);
+                currentEventId = event.currentTarget.id;
                 updateScreenInformation(Data)
             },
             (Error) => {
@@ -85,7 +94,7 @@ function listBooks(){
     for (let book of bookData.items){
 
         if (book.volumeInfo.authors !== undefined){
-            $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors}</li>`)
+            $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors[0]}</li>`)
         } else {
             $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: Unknown</li>`)
         }
