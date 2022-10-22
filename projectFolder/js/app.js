@@ -25,13 +25,18 @@ $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>Gree
 
 // Updatting the area with full book information
 function updateScreenInformation(bookObj){
+
     console.log("Break");
     $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
     $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
     let test = (bookObj.volumeInfo.description).split('').splice(0,150).join('')
     $frequentLocations.searchDescription.html(bookObj.volumeInfo.description)
+    if (bookObj.volumeInfo.authors !== undefined) {
     $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
+    } else {
+        $frequentLocations.searchAuthor.text("Unknown")
+    }
     
     
     console.log()
@@ -78,7 +83,13 @@ function listBooks(){
     // Initializes counter that will be used to give each element a unique ID
     counter = 0;
     for (let book of bookData.items){
-        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors[0]}</li>`)
+
+        if (book.volumeInfo.authors !== undefined){
+            $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors}</li>`)
+        } else {
+            $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: Unknown</li>`)
+        }
+
         //Pushing a key value pair to later access if user wants more info
         bookList["a"+counter] = book.id
         descriptionList["a"+counter] = book.searchInfo
