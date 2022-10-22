@@ -5,6 +5,7 @@
 let userInput;
 let bookData;
 let bookList = {};
+let descriptionList= {};
 
 //Areas I will need to grab or push data from frequently
 const $frequentLocations = {
@@ -13,30 +14,27 @@ const $frequentLocations = {
     searchResults: $("#searchResults ul"),
     searchImage: $("#thumbnail img"),
     searchTitle: $("#titleLabel"),
+    searchSubtitle: $("#subtitleLabel"),
     searchDescription: $("#descriptionLabel"),
+    searchAuthor: $("#authorLabel"),
     shelfAddList: $("#addDropdown"),
     addForm: $("#addForm")
 }
 $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>Green Eggs and Ham</span><br>Author: Dr. Seuss</li>`)
 
-// Iterating though list of books and adding them to screen
-function listBooks(){
-    // Clears out the current displayed results
-    $frequentLocations.searchResults.empty();
-    // Empties book array of their identifiers
-    bookList = {};
-    // Initializes counter that will be used to give each element a unique ID
-    counter = 0;
-    for (let book of bookData.items){
-        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors[0]}</li>`)
-        //Pushing a key value pair to later access if user wants more info
-        bookList["a"+counter] = book.id
-        counter++
-    }
-    
-}
+
+// Updatting the area with full book information
 function updateScreenInformation(bookObj){
+    console.log("Break");
+    $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
+    $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
+    $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
+    let test = (bookObj.volumeInfo.description).split('').splice(0,150).join('')
+    $frequentLocations.searchDescription.html(bookObj.volumeInfo.description)
+    $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
     
+    
+    console.log()
 }
 
 // Function to grab list item clicked, and use the ID to retireve the thumbnail and description
@@ -49,11 +47,10 @@ function moreInfo(event) {
         })
         promise.then(
             (Data) => {
-                console.log(Data);
                 updateScreenInformation(Data)
             },
             (Error) => {
-                console.log(error);
+                console.log(Error);
             }
         )
     } else {
@@ -72,7 +69,25 @@ function moreInfo(event) {
         )
     }
 }
+// Iterating though list of books and adding them to screen
+function listBooks(){
+    // Clears out the current displayed results
+    $frequentLocations.searchResults.empty();
+    // Empties book array of their identifiers
+    bookList = {};
+    // Initializes counter that will be used to give each element a unique ID
+    counter = 0;
+    for (let book of bookData.items){
+        $frequentLocations.searchResults.append(`<li id="a${counter}">Title: <span class='bookTitle'>${book.volumeInfo.title}</span><br>Author: ${book.volumeInfo.authors[0]}</li>`)
+        //Pushing a key value pair to later access if user wants more info
+        bookList["a"+counter] = book.id
+        descriptionList["a"+counter] = book.searchInfo
+        console.log(book.searchInfo)
+        counter++
 
+    }
+    
+}
 // What happens when book title is submitted
 function searchBook(event) {
     event.preventDefault()
