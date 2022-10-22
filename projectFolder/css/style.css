@@ -6,18 +6,18 @@ body {
     font-family: Arial;
     background-color: #f2eecb;
     flex-wrap: wrap;
-    grid-template: .125fr .5fr 1fr 1fr 1fr 1fr 1fr .125fr / .125fr 1fr 1fr 1fr 1fr .125fr;
+    grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .125fr 1fr 1fr .125fr;
 }
 
 #title {
     display: grid;
-    grid-area: 2 / 2 / 2 / 6;
+    grid-area: 1 / 2 / 2 / 4;
     text-align: center;
 }
 
 #searchResults {
     display: grid;
-    grid-area: 3 / 2 / 8 / 2;
+    grid-area: 3 / 2 / 9 / 2;
 }
 
 img {
@@ -29,7 +29,7 @@ img {
 
 #searchForm {
     display: grid;
-    grid-area: 3 / 3 / 4 / 3;
+    grid-area: 3 / 3 / 3 / 3;
     text-align: center;
     font-size: 3vh;
 }
@@ -40,6 +40,7 @@ input{
 
 ul{
     align-self: flex-start;
+    padding: 0;
 }
 li {
     margin-bottom: 2vh;
@@ -53,30 +54,28 @@ li {
 
 #thumbnail {
     display: grid;
-    grid-area: 4 / 3 / 6 / 3;
+    grid-area: 4 / 3 / 6 / 4;
 }
 
 #bookInformation {
     display: grid;
-    grid-area: 6 / 3 / 7 / 3;
+    grid-area: 6 / 3 / 7 / 4;
     text-align: center;
     font-size: 1.5vh;
 }
 
 #addForm {
     display: grid;
-    grid-area: 7 / 3 / 8 / 3 ;
+    grid-area: 7 / 3 / 7 / 3 ;
     text-align: center;
 }
-
-
 
 ul, #resultsLabel{
     display: grid;
     grid-row-start: 1;
 }
 select {
-    font-size: .75vh;
+    font-size: 2vh;
     width: 90%;
     display: inline-flex;
     justify-self: center;
@@ -92,4 +91,11 @@ select {
 label {
     font-size: 3vh;
 }
+
+@media (max-width: 480px) {
+    #thumbnail {
+        display: grid;
+        grid-area: 4 / 3 / 5 / 4;
+    }
+  }
 
