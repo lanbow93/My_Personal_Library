@@ -35,15 +35,41 @@ function listBooks(){
     }
     
 }
+function updateScreenInformation(bookObj){
+    
+}
 
 // Function to grab list item clicked, and use the ID to retireve the thumbnail and description
 function moreInfo(event) {
 
     if (event.target.id === "") {
-        let test = event.currentTarget.id
-        console.log(bookList)
+        let selectedBookLink = bookList[event.currentTarget.id]
+        const promise = $.ajax({
+            url: `https://www.googleapis.com/books/v1/volumes/${selectedBookLink}`
+        })
+        promise.then(
+            (Data) => {
+                console.log(Data);
+                updateScreenInformation(Data)
+            },
+            (Error) => {
+                console.log(error);
+            }
+        )
     } else {
-        console.log(event.target.id)
+        let selectedBookLink = bookList[event.target.id]
+        const promise = $.ajax({
+            url: `https://www.googleapis.com/books/v1/volumes/${selectedBookLink}`
+        })
+        promise.then(
+            (Data) => {
+                console.log(Data);
+                updateScreenInformation(Data)
+            },
+            (Error) => {
+                console.log(Error);
+            }
+        )
     }
 }
 
