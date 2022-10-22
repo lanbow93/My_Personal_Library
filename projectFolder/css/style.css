@@ -6,13 +6,12 @@ body {
     font-family: Arial;
     background-color: #f2eecb;
     flex-wrap: wrap;
-    grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .125fr 1fr 1fr .125fr;
+    grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .0625fr 1fr 1fr .0625fr;
 }
 
 #title {
     display: grid;
-    grid-area: 1 / 2 / 2 / 4;
-    text-align: center;
+    grid-area: 1 / 2 / 2 / 4;g
 }
 
 #searchResults {
@@ -73,6 +72,7 @@ li {
 ul, #resultsLabel{
     display: grid;
     grid-row-start: 1;
+    list-style-type: none;
 }
 select {
     font-size: 2vh;
