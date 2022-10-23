@@ -88,7 +88,7 @@ li {
     font-size: 1.5vh;
 }
 
-#addForm {
+#addFormSection {
     display: grid;
     grid-area: 5 / 2 / 6 / 3 ;
     text-align: center;
@@ -108,10 +108,7 @@ select {
 
 #dropButton {
     font-size: 2vh;
-    margin-top: .5vh;
-    width: 80%;
-    height: 80%;
-    justify-self: center;
+
 }
 label {
     font-size: 3vh;
@@ -139,17 +136,15 @@ grid-template:
     display: grid;
     grid-area: 1 / 2 / 2 / 3;
     text-align: center;
-    flex-direction: row;
 }
 
-#addShelfDropdown {
+#addShelfDropdown, #addDropdown {
   width: 30%;
 }
 
-#browseShelf {
-    
+#browseShelf,#dropButton {
+    margin: 0;
     margin-left: .5em;
-
 
 }
 
