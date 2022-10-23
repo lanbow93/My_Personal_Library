@@ -132,7 +132,7 @@ function searchBook(event) {
 $frequentLocations.searchForm.on("submit", searchBook);
 
 
-
+// When shelf Catalog button is clicked, changes to the screen
 function slideSearchMenu() {
     $frequentLocations.bookSearchScreen.slideToggle(1000)
     setTimeout(function slideShelfCatalog() {
@@ -140,6 +140,7 @@ function slideSearchMenu() {
     },1500)
     $frequentLocations.bookSearchButton.removeAttr("disabled")
     $frequentLocations.shelfCatalogButton.attr("disabled", true)
+    $frequentLocations.windowStatus.text("Shelf Catalog")
 }
 
 // Click listener for slide toggle
@@ -147,8 +148,8 @@ $frequentLocations.shelfCatalogButton.on("click", () => {
 slideSearchMenu()   
 })
 
-//Initially hide shelf menu
-$frequentLocations.shelfCatalogScreen.slideToggle()
+//Initially hide shelf menu (UNCOMMENT WHEN FINISHED WITH SECOND SCREEN)
+// $frequentLocations.shelfCatalogScreen.slideToggle()
 
 
 

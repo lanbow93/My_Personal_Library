@@ -37,6 +37,7 @@ body {
     display: grid;
     grid-area: 3 / 2 / 9 / 4;
     margin: 0;
+    display: none;
 }
 
 #searchResults {
@@ -124,6 +125,12 @@ label {
     grid-area: 3 / 2 / 9 / 4;
     margin: 0;
 }
+
+#createShelfForm {
+    grid-area: 1 / 1 / 2 / 2 ;
+}
+
+
 
 @media (max-width: 480px) {
     #thumbnail {
