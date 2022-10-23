@@ -131,23 +131,25 @@ grid-template:
 #createShelfForm {
     display: grid;
     grid-area: 1 / 1 / 2 / 2 ;
+    justify-content: center;
+    text-align: center;
 }
 
 #shelfSelectForm {
     display: grid;
     grid-area: 1 / 2 / 2 / 3;
+    text-align: center;
+    flex-direction: row;
 }
 
 #addShelfDropdown {
-    width: 40%;
-    font-size: 2vh;
+  width: 30%;
 }
 
 #browseShelf {
-    padding: .2vh;
-    font-size: 1.8vh;
+    
     margin-left: .5em;
-    width: 30%;
+
 
 }
 
@@ -158,8 +160,18 @@ grid-template:
 
 #shelfResults {
     display: grid;
-    grid-area: 2 / 2 / 7 / 3;
+    grid-area: 2 / 2 / 7 / 2;
 }
+
+#shelfBookInformation {
+    display: grid;
+    grid-area: 4 / 1 / 5 / 2;
+    text-align: center;
+    font-size: 1.5vh;
+}
+
+
+
 
 
 

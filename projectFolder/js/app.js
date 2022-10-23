@@ -28,10 +28,11 @@ const $frequentLocations = {
     shelfCreationBox: $("#shelfCreateBox"),
     shelfCreationForm: $("#shelfForm"),
     shelfResults: $("#shelfResults ul"),
+    shelfSelectionForm: $("#shelfSelectionForm")
 
 }
 $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
-$frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
+$frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book titles that will be added to this shelf</span><br>Author: This will contain one author's name</li>`)
 
 
 // Updatting the area with full book information
