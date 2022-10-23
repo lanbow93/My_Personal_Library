@@ -10,6 +10,9 @@ let currentEventId;
 
 //Areas I will need to grab or push data from frequently
 const $frequentLocations = {
+    bookSearchButton: $("#bookSearchButton"),
+    shelfCatalogButton: $("#shelfCatalogButton"),
+    windowStatus: $("#currentWindowStatus"),
     searchBox: $("#searchBox"),
     searchForm: $("#inputForm"),
     searchResults: $("#searchResults ul"),
@@ -19,7 +22,9 @@ const $frequentLocations = {
     searchDescription: $("#descriptionLabel"),
     searchAuthor: $("#authorLabel"),
     shelfAddList: $("#addDropdown"),
-    addForm: $("#addForm")
+    addForm: $("#addForm"),
+    bookSearchScreen: $("#bookSearchMenu"),
+    shelfCatalogScreen: $("#shelfCatalogMenu")
 }
 $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>Green Eggs and Ham</span><br>Author: Dr. Seuss</li>`)
 
@@ -39,9 +44,6 @@ function updateScreenInformation(bookObj){
     } else {
         $frequentLocations.searchAuthor.text("Unknown")
     }
-    
-    
-    console.log(currentEventId)
 }
 
 // Function to grab list item clicked, and use the ID to retireve the thumbnail and description
@@ -128,6 +130,26 @@ function searchBook(event) {
 
 // Click listener on the search box to look up book results
 $frequentLocations.searchForm.on("submit", searchBook);
+
+
+
+function slideSearchMenu() {
+    $frequentLocations.bookSearchScreen.slideToggle(1000)
+    setTimeout(function slideShelfCatalog() {
+        $frequentLocations.shelfCatalogScreen.slideToggle(1000)
+    },1500)
+    $frequentLocations.bookSearchButton.removeAttr("disabled")
+    $frequentLocations.shelfCatalogButton.attr("disabled", true)
+}
+
+// Click listener for slide toggle
+$frequentLocations.shelfCatalogButton.on("click", () => {
+slideSearchMenu()   
+})
+
+//Initially hide shelf menu
+$frequentLocations.shelfCatalogScreen.slideToggle()
+
 
 
 

@@ -11,50 +11,49 @@
     <script src="./js/app.js" defer></script>
 </head>
 <body>
-    <div></div>
     <div id="title">
         <h1>My Personal Library</h1>
     </div>
     <nav id="navMenu">
         <div id="navBlock">
-            <button class="navButton">Book Search</button>
-            <h3>Status Check</h3>
-            <button class="navButton">Shelf Catalog</button>
+            <button class="navButton" id="bookSearchButton" disabled>Book Search</button>
+            <h3 id="currentWindowStatus">Search Screen</h3>
+            <button class="navButton" id="shelfCatalogButton">Shelf Catalog</button>
         </div>
     </nav>
     <div id="bookSearchMenu">
-    <div id="searchResults">
-        <ul> 
-        </ul>
-    </div>
-    <div id="searchForm">
-        <p>Please Enter Search Term</p>
-        <form id="inputForm">
-            <input type="text" placeholder="Title/Author/etc." id="searchBox">
-            <input type="submit" value="Search">
-        </form>
-    </div>
-    <div id="thumbnail">
-        <img src="http://books.google.com/books/content?id=kLAoswEACAAJ&printsec=frontcover&img=1&zoom=5&imgtk=AFLRE73-FDeTq773lOtukRzLHIlWk72EK4H-0Z2roBrmgJCmT9PxznJiGfDTUVifK0j-Nn1HS654Xwcg0OC9zY8JLGauf674kbwnU9mJ_W7cm2r11hAfDHj5CbYrhiVmLZI7usknZ64X&source=gbs_api">
-    </div>
-    <div id="bookInformation">
-        <div id="addBookDetails">
-            <p id="titleLabel" class="bookTitle">Harry Potter and the Cursed Child</p><p id="subtitleLabel">Parts One and Two Playscript</p><p>by <span id="authorLabel">J. K. Rowling</span></p>
+        <div id="searchResults">
+            <ul> 
+            </ul>
         </div>
-        <div id="addBookDescription">
-            <p id="descriptionLabel">As an overworked employee of the Ministry of Magic, a husband, and a father, Harry Potter struggles with a past that refuses to stay where it belongs while his youngest son, Albus, finds the weight of the family legacy difficult to bear.</p>
+        <div id="searchForm">
+            <p>Please Enter Search Term</p>
+            <form id="inputForm">
+                <input type="text" placeholder="Title/Author/etc." id="searchBox">
+                <input type="submit" value="Search">
+            </form>
         </div>
-    </div>
-    <div id="addForm">
-        <label for="drop-down">Shelf List:</label>
-        <select name="drop-down" id="addDropdown"> 
-        <input type="submit" id="dropButton" value="Add Book To Shelf">
+        <div id="thumbnail">
+            <img src="http://books.google.com/books/content?id=kLAoswEACAAJ&printsec=frontcover&img=1&zoom=5&imgtk=AFLRE73-FDeTq773lOtukRzLHIlWk72EK4H-0Z2roBrmgJCmT9PxznJiGfDTUVifK0j-Nn1HS654Xwcg0OC9zY8JLGauf674kbwnU9mJ_W7cm2r11hAfDHj5CbYrhiVmLZI7usknZ64X&source=gbs_api">
+        </div>
+        <div id="bookInformation">
+            <div id="addBookDetails">
+                <p id="titleLabel" class="bookTitle">Harry Potter and the Cursed Child</p><p id="subtitleLabel">Parts One and Two Playscript</p><p>by <span id="authorLabel">J. K. Rowling</span></p>
+            </div>
+            <div id="addBookDescription">
+                <p id="descriptionLabel">As an overworked employee of the Ministry of Magic, a husband, and a father, Harry Potter struggles with a past that refuses to stay where it belongs while his youngest son, Albus, finds the weight of the family legacy difficult to bear.</p>
+            </div>
+        </div>
+        <div id="addForm">
+            <label for="drop-down">Shelf List:</label>
+            <select name="drop-down" id="addDropdown"> 
+            <input type="submit" id="dropButton" value="Add Book To Shelf">
+        </div>
     </div>
 
-</div>
-    
-
-    
+    <div id="shelfCatalogMenu">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos fugiat accusamus dolorem consectetur impedit amet at repellat maiores. Repellendus necessitatibus delectus dolor nostrum, temporibus quibusdam molestias! Quasi possimus reprehenderit dicta.</p>
+    </div>
 
 </body>
 </html>
