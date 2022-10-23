@@ -149,7 +149,7 @@ slideSearchMenu()
 })
 
 //Initially hide shelf menu (UNCOMMENT WHEN FINISHED WITH SECOND SCREEN)
-// $frequentLocations.shelfCatalogScreen.slideToggle()
+ $frequentLocations.shelfCatalogScreen.slideToggle()
 
 
 
