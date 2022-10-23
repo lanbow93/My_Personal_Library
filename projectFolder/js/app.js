@@ -24,9 +24,14 @@ const $frequentLocations = {
     shelfAddList: $("#addDropdown"),
     addForm: $("#addForm"),
     bookSearchScreen: $("#bookSearchMenu"),
-    shelfCatalogScreen: $("#shelfCatalogMenu")
+    shelfCatalogScreen: $("#shelfCatalogMenu"),
+    shelfCreationBox: $("#shelfCreateBox"),
+    shelfCreationForm: $("#shelfForm"),
+    shelfResults: $("#shelfResults ul"),
+
 }
 $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
+$frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
 
 
 // Updatting the area with full book information
@@ -149,9 +154,9 @@ slideSearchMenu()
 })
 
 //Initially hide shelf menu (UNCOMMENT WHEN FINISHED WITH SECOND SCREEN)
- $frequentLocations.shelfCatalogScreen.slideToggle()
+// $frequentLocations.shelfCatalogScreen.slideToggle()
 
-
+$frequentLocations.bookSearchScreen.slideToggle()
 
 
 

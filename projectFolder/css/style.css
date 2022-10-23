@@ -139,7 +139,7 @@ grid-template:
 }
 
 #addShelfDropdown {
-    width: 50%;
+    width: 40%;
     font-size: 2vh;
 }
 
@@ -147,12 +147,18 @@ grid-template:
     padding: .2vh;
     font-size: 1.8vh;
     margin-left: .5em;
+    width: 30%;
 
 }
 
 #shelfThumbnail {
     display: grid;
     grid-area: 2 / 1 / 4 / 2;
+}
+
+#shelfResults {
+    display: grid;
+    grid-area: 2 / 2 / 7 / 3;
 }
 
 
