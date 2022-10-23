@@ -130,6 +130,24 @@ label {
     grid-area: 1 / 1 / 2 / 2 ;
 }
 
+#shelfSelectForm {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+#addDropdown {
+    width: 50%;
+    font-size: 2vh;
+}
+
+#browseShelf {
+    padding: .2vh;
+    font-size: 1.8vh;
+    margin-left: .5em;
+
+}
+
+
+
 
 
 @media (max-width: 480px) {
