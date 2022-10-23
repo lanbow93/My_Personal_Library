@@ -26,7 +26,7 @@ const $frequentLocations = {
     bookSearchScreen: $("#bookSearchMenu"),
     shelfCatalogScreen: $("#shelfCatalogMenu")
 }
-$frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>Green Eggs and Ham</span><br>Author: Dr. Seuss</li>`)
+$frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
 
 
 // Updatting the area with full book information
