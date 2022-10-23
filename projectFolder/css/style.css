@@ -4,14 +4,31 @@ body {
     height: 100vh;  /*viewport height*/
     display: grid;
     font-family: Arial;
-    background-color: #f2eecb;
+    background-color:rgb(221, 215, 215);
     flex-wrap: wrap;
     grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .0625fr 1fr 1fr .0625fr;
 }
 
 #title {
     display: grid;
-    grid-area: 1 / 2 / 2 / 4;g
+    grid-area: 1 / 2 / 2 / 4;
+    text-align: center;
+}
+
+#navMenu {
+    display: grid;
+    grid-area: 2 / 2 / 2 / 4;
+    background-color: rgba(54, 96, 131, 0.514);
+}
+
+#navBlock{
+    display: flex;
+    justify-content: space-around;
+}
+
+.navButton {
+    font-size: 2vh;
+    font-weight: bold;
 }
 
 #searchResults {
