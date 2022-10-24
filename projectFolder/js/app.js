@@ -14,8 +14,10 @@ let shelfObjects = {
     testName: {"1IleAgAAQBAJ": ["The Giving Tree", `As The Giving Tree turns fifty, this timeless classic is available for the first time ever in ebook format. This digital edition allows young readers and lifelong fans to continue the legacy and love of a classic that will now reach an even wider audience. "Once there was a tree...and she loved a little boy." So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein. This moving parable for all ages offers a touching interpretation of the gift of giving and a serene acceptance of another's capacity to love in return. Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein's incomparable career as a bestselling children's book author and illustrator began with Lafcadio, the Lion Who Shot Back. He is also the creator of picture books including A Giraffe and a Half, Who Wants a Cheap Rhinoceros?, The Missing Piece, The Missing Piece Meets the Big O, and the perennial favorite The Giving Tree, and of classic poetry collections such as Where the Sidewalk Ends, A Light in the Attic, Falling Up, Every Thing On It, Don't Bump the Glump!, and Runny Babbit. And don't miss the other Shel Silverstein ebooks, Where the Sidewalk Ends and A Light in the Attic!`]}
 }
 // Iterating through shelfs created and added shelves to dropDown
+//   <option value="volvo">Volvo</option>
 function updateDropdownList () {
-    for (let shelf in shelfObjects) {
+    for (let shelf in shelfObjects) { // Loops though the shelf names/keys
+        $("select").append(`<option value="${shelf}">${shelf}</option>`)
         console.log(shelf)
         for(book in shelfObjects[shelf])
         console.log(book);
