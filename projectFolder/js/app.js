@@ -6,7 +6,21 @@ let userInput;
 let bookData;
 let bookList = {};
 let descriptionList= {};
+let bookshelf
 let currentEventId;
+let shelfObjects = {
+    defaultName: {"kLAoswEACAAJ": ["Harry Potter and the Cursed Child", "The official playscript of the original West End production of Harry Potter and the Cursed Child. It was always difficult being Harry Potter and it isn't much easier now that he is an overworked employee of the Ministry of Magic, a husband, and father of three school-age children. While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places. The playscript for Harry Potter and the Cursed Child was originally released as a 'special rehearsal edition' alongside the opening of Jack Thorne's play in London's West End in summer 2016. Based on an original story by J.K. Rowling, John Tiffany and Jack Thorne, the play opened to rapturous reviews from theatregoers and critics alike, while the official playscript became an immediate global bestseller. This revised paperback edition updates the 'special rehearsal edition' with the conclusive and final dialogue from the play, which has subtly changed since its rehearsals, as well as a conversation piece between director John Tiffany and writer Jack Thorne, who share stories and insights about reading playscripts. This edition also includes useful background information including the Potter family tree and a timeline of events from the wizarding world prior to the beginning of Harry Potter and the Cursed Child."]},
+
+    testName: {"1IleAgAAQBAJ": ["The Giving Tree", `As The Giving Tree turns fifty, this timeless classic is available for the first time ever in ebook format. This digital edition allows young readers and lifelong fans to continue the legacy and love of a classic that will now reach an even wider audience. "Once there was a tree...and she loved a little boy." So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein. This moving parable for all ages offers a touching interpretation of the gift of giving and a serene acceptance of another's capacity to love in return. Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein's incomparable career as a bestselling children's book author and illustrator began with Lafcadio, the Lion Who Shot Back. He is also the creator of picture books including A Giraffe and a Half, Who Wants a Cheap Rhinoceros?, The Missing Piece, The Missing Piece Meets the Big O, and the perennial favorite The Giving Tree, and of classic poetry collections such as Where the Sidewalk Ends, A Light in the Attic, Falling Up, Every Thing On It, Don't Bump the Glump!, and Runny Babbit. And don't miss the other Shel Silverstein ebooks, Where the Sidewalk Ends and A Light in the Attic!`]}
+}
+// Iterating through shelfs created and added shelves to dropDown
+function updateDropdownList () {
+    for (let shelf in shelfObjects) {
+        console.log(shelf)
+        for(book in shelfObjects[shelf])
+        console.log(book);
+    }
+}
 
 //Areas I will need to grab or push data from frequently
 const $frequentLocations = {
@@ -39,11 +53,15 @@ $frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This 
 function updateScreenInformation(bookObj){
     $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
-    $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
-    
     $frequentLocations.searchDescription.text(descriptionList[currentEventId].split('').splice(0, 450).join('') + " ...")
     console.log()
 
+    // If subtitle comes back undefines
+    if(bookObj.volumeInfo.subtitle !== undefined) {
+        $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
+    } else {
+        $frequentLocations.searchSubtitle.text("")
+    }
     // If book author returns back undefined
     if (bookObj.volumeInfo.authors !== undefined) {
     $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
@@ -180,16 +198,5 @@ $frequentLocations.bookSearchButton.on("click", () => {
 //$frequentLocations.bookSearchScreen.slideToggle()
 
 
-
-
-
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">The Guernsey Literary and Potato Peel Pie Society</span><br>Author: Mary Ann Shaffer
-// </li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
-// $("ul").append(`<li>Title: <span id="bookTitle">Roots</span><br>Author: Alex Haley</li>`)
+// Name is self explanatory 
+updateDropdownList()

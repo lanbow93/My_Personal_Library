@@ -175,11 +175,6 @@ grid-template:
     color: white;
 }
 
-
-
-
-
-
 @media (max-width: 480px) {
     #navBlock{
         display: flex;
