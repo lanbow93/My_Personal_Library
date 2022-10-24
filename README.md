@@ -15,8 +15,13 @@ An online application used to search books by Title/Author/Publication/IBSN/Gene
 
 
 ### Currently Contains:
-* Skeleton for initial rough draft
-* CSS loosely done to put relative positions on screen
+* HTML fully flushed out for submission standards
+* CSS Moderately finished / Polishing needed
+* All Minimum Features completed and functional
+* All Additional Time Featues completed and functional
+* All Advances Features completed and semi-functional
+* Change up to layout to incorporate mobile responsiveness
+* Nav bar to move between Shelves and Book Search
 
 ### Wireframe
 [Initial Wireframe Created](https://docs.google.com/document/d/1WYAIz0Zu2aB43ZTSuNoMmAYhRf72F91zBaTGuoSramA/edit?usp=sharing)
