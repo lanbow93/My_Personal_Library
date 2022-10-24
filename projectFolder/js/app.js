@@ -1,3 +1,7 @@
+/* ~~~~~~~~~~~~~~~~~~~~ Bugs Discovered - To Fix ~~~~~~~~~~~~~~~~~~~~ */
+// Sometimes no thumbnail
+
+
 // https://www.googleapis.com/books/v1/volumes?q={search+terms} << Find book by search terms
 // https://www.googleapis.com/books/v1/volumes/YJjdtQEACAAJ << Find book by ID
 
@@ -9,10 +13,11 @@ let descriptionList= {};
 let bookShelf;
 let currentEventId;
 let currentSelfLink;
+let currentAuthor;
 let shelfObjects = {
-    defaultName: {"kLAoswEACAAJ": ["Harry Potter and the Cursed Child", "The official playscript of the original West End production of Harry Potter and the Cursed Child. It was always difficult being Harry Potter and it isn't much easier now that he is an overworked employee of the Ministry of Magic, a husband, and father of three school-age children. While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places. The playscript for Harry Potter and the Cursed Child was originally released as a 'special rehearsal edition' alongside the opening of Jack Thorne's play in London's West End in summer 2016. Based on an original story by J.K. Rowling, John Tiffany and Jack Thorne, the play opened to rapturous reviews from theatregoers and critics alike, while the official playscript became an immediate global bestseller. This revised paperback edition updates the 'special rehearsal edition' with the conclusive and final dialogue from the play, which has subtly changed since its rehearsals, as well as a conversation piece between director John Tiffany and writer Jack Thorne, who share stories and insights about reading playscripts. This edition also includes useful background information including the Potter family tree and a timeline of events from the wizarding world prior to the beginning of Harry Potter and the Cursed Child."]},
+    defaultName: {"kLAoswEACAAJ": ["Harry Potter and the Cursed Child", "J. K. Rowling", `The official playscript of the original West End production of Harry Potter and the Cursed Child. It was always difficult being Harry Potter and it isn't much easier now that he is an overworked employee of the Ministry of Magic, a husband, and father of three school-age children. While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places. The playscript for Harry Potter and the Cursed Child was originally released as a 'special rehearsal edition' alongside the opening of Jack Thorne's play in London's West End in summer 2016. Based on an original story by J.K. Rowling, John Tiffany and Jack Thorne, the play opened to rapturous reviews from theatregoers and critics alike, while the official playscript became an immediate global bestseller. This revised paperback edition updates the 'special rehearsal edition' with the conclusive and final dialogue from the play, which has subtly changed since its rehearsals, as well as a conversation piece between director John Tiffany and writer Jack Thorne, who share stories and insights about reading playscripts. This edition also includes useful background information including the Potter family tree and a timeline of events from the wizarding world prior to the beginning of Harry Potter and the Cursed Child.`]},
 
-    testName: {"1IleAgAAQBAJ": ["The Giving Tree", `As The Giving Tree turns fifty, this timeless classic is available for the first time ever in ebook format. This digital edition allows young readers and lifelong fans to continue the legacy and love of a classic that will now reach an even wider audience. "Once there was a tree...and she loved a little boy." So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein. This moving parable for all ages offers a touching interpretation of the gift of giving and a serene acceptance of another's capacity to love in return. Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein's incomparable career as a bestselling children's book author and illustrator began with Lafcadio, the Lion Who Shot Back. He is also the creator of picture books including A Giraffe and a Half, Who Wants a Cheap Rhinoceros?, The Missing Piece, The Missing Piece Meets the Big O, and the perennial favorite The Giving Tree, and of classic poetry collections such as Where the Sidewalk Ends, A Light in the Attic, Falling Up, Every Thing On It, Don't Bump the Glump!, and Runny Babbit. And don't miss the other Shel Silverstein ebooks, Where the Sidewalk Ends and A Light in the Attic!`]}
+    testName: {"1IleAgAAQBAJ": ["The Giving Tree", "Shel Silverstein", `As The Giving Tree turns fifty, this timeless classic is available for the first time ever in ebook format. This digital edition allows young readers and lifelong fans to continue the legacy and love of a classic that will now reach an even wider audience. "Once there was a tree...and she loved a little boy." So begins a story of unforgettable perception, beautifully written and illustrated by the gifted and versatile Shel Silverstein. This moving parable for all ages offers a touching interpretation of the gift of giving and a serene acceptance of another's capacity to love in return. Every day the boy would come to the tree to eat her apples, swing from her branches, or slide down her trunk...and the tree was happy. But as the boy grew older he began to want more from the tree, and the tree gave and gave and gave. This is a tender story, touched with sadness, aglow with consolation. Shel Silverstein's incomparable career as a bestselling children's book author and illustrator began with Lafcadio, the Lion Who Shot Back. He is also the creator of picture books including A Giraffe and a Half, Who Wants a Cheap Rhinoceros?, The Missing Piece, The Missing Piece Meets the Big O, and the perennial favorite The Giving Tree, and of classic poetry collections such as Where the Sidewalk Ends, A Light in the Attic, Falling Up, Every Thing On It, Don't Bump the Glump!, and Runny Babbit. And don't miss the other Shel Silverstein ebooks, Where the Sidewalk Ends and A Light in the Attic!`]}
 
 }
 
@@ -37,7 +42,8 @@ const $frequentLocations = {
     shelfCreationForm: $("#shelfForm"),
     shelfResults: $("#shelfResults ul"),
     shelfSelectionForm: $("#shelfSelectionForm"),
-    shelfAddDropdown: $("#addDropdown")
+    shelfAddDropdown: $("#addDropdown"),
+    listShelfDropdown: $("#addShelfDropdown")
 
 }
 
@@ -47,8 +53,6 @@ function updateDropdownList () {
     $("select").empty();
     for (let shelf in shelfObjects) { // Loops though the shelf names/keys
         $("select").append(`<option value="${shelf}">${shelf}</option>`)
-        for(book in shelfObjects[shelf]) // Logs each book id in 
-        console.log(book);
     }
 }
 
@@ -66,6 +70,8 @@ function updateScreenInformation(bookObj){
     // If book author returns undefined
     if (bookObj.volumeInfo.authors !== undefined) {
     $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
+    currentAuthor = bookObj.volumeInfo.authors
+    console.log(currentAuthor);
     } else {
         $frequentLocations.searchAuthor.text("Unknown")
     }
@@ -98,6 +104,37 @@ function listBooks(){
         descriptionList["a"+counter] = book.volumeInfo.description
         counter++
     }  
+}
+
+// Adding book to Shelf
+function addBookToShelf(event) {
+    event.preventDefault();
+    let shelfToStore = $frequentLocations.shelfAddDropdown.val()
+    shelfObjects[`${shelfToStore}`][`${currentSelfLink}`] = [$frequentLocations.searchTitle.text(), currentAuthor, descriptionList[currentEventId]];
+
+    console.log(shelfObjects);
+    
+}
+
+// Displaying books in specific shelf
+function listBookStored(event){
+    event.preventDefault();
+    // Clears out the current displayed results
+    $frequentLocations.shelfResults.empty();
+    
+    // Grabbing shelf name from dropdown and accessing its book objects
+    let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`]
+    // Initializes counter that will be used to give each element a unique ID
+    counter = 0;
+     for (let bookID in selectedShelf) {
+        let bookInformation = selectedShelf[`${bookID}`]
+        if (typeof(bookInformation[1]) === "string") {
+            $frequentLocations.shelfResults.append(`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1]}</li>`)
+        } else {
+            $frequentLocations.shelfResults.append(`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
+        }
+        counter++
+    }
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
@@ -184,15 +221,8 @@ function revealSearchMenu() {
 //////////////////////////////////// TO DO ////////////////////////////////////////////
 // shelfObjects
 // shelfName: {"url_ID": [BookTitle, descripion]}
+// (`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
 
-// Adding book to Shelf
-function addBookToShelf(event) {
-    event.preventDefault();
-    let shelfToStore = $frequentLocations.shelfAddDropdown.val()
-    shelfObjects[`${shelfToStore}`][`${currentSelfLink}`] = [$frequentLocations.searchTitle.text(), descriptionList[currentEventId]];
-    console.log(shelfObjects);
-    
-}
 
 /* ~~~~~~~~~~~~~~~~~~~~ Assigning The Click Listeners ~~~~~~~~~~~~~~~~~~~~ */
 // Event listener on the search box to look up book results
@@ -205,7 +235,8 @@ $frequentLocations.shelfCatalogButton.on("click", revealCatalogMenu)
 $frequentLocations.shelfCreationForm.on("submit", createShelf);
 // Event listener for book storing
 $frequentLocations.addForm.on("submit", addBookToShelf)
-
+// Event Listener for displaying books on shelf
+$frequentLocations.shelfSelectionForm.on("submit", listBookStored)
 
 /* ~~~~~~~~~~~~~~~~~~~~ Initializes Screen to Proper Conditions ~~~~~~~~~~~~~~~~~~~~ */
 // Example Pushes On Screen
@@ -220,6 +251,3 @@ function initializeScreen() {
 
 // Calls for the function above
 initializeScreen();
-
-
-
