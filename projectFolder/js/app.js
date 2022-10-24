@@ -6,8 +6,9 @@ let userInput;
 let bookData;
 let bookList = {};
 let descriptionList= {};
-let bookshelf
+let bookShelf;
 let currentEventId;
+let currentSelfLink;
 let shelfObjects = {
     defaultName: {"kLAoswEACAAJ": ["Harry Potter and the Cursed Child", "The official playscript of the original West End production of Harry Potter and the Cursed Child. It was always difficult being Harry Potter and it isn't much easier now that he is an overworked employee of the Ministry of Magic, a husband, and father of three school-age children. While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places. The playscript for Harry Potter and the Cursed Child was originally released as a 'special rehearsal edition' alongside the opening of Jack Thorne's play in London's West End in summer 2016. Based on an original story by J.K. Rowling, John Tiffany and Jack Thorne, the play opened to rapturous reviews from theatregoers and critics alike, while the official playscript became an immediate global bestseller. This revised paperback edition updates the 'special rehearsal edition' with the conclusive and final dialogue from the play, which has subtly changed since its rehearsals, as well as a conversation piece between director John Tiffany and writer Jack Thorne, who share stories and insights about reading playscripts. This edition also includes useful background information including the Potter family tree and a timeline of events from the wizarding world prior to the beginning of Harry Potter and the Cursed Child."]},
 
@@ -35,7 +36,8 @@ const $frequentLocations = {
     shelfCreationBox: $("#shelfCreateBox"),
     shelfCreationForm: $("#shelfForm"),
     shelfResults: $("#shelfResults ul"),
-    shelfSelectionForm: $("#shelfSelectionForm")
+    shelfSelectionForm: $("#shelfSelectionForm"),
+    shelfAddDropdown: $("#addDropdown")
 
 }
 
@@ -50,7 +52,7 @@ function updateDropdownList () {
     }
 }
 
-// Updatting the area with full book information
+// Updating the area with full book information
 function updateScreenInformation(bookObj){
     $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
@@ -67,6 +69,14 @@ function updateScreenInformation(bookObj){
     } else {
         $frequentLocations.searchAuthor.text("Unknown")
     }
+}
+
+// Creating a new shelf
+function createShelf(event) {
+    event.preventDefault();
+    let shelfName = $frequentLocations.shelfCreationBox.val()
+    shelfObjects[`${shelfName}`] = {};
+    updateDropdownList()
 }
 
 // Iterating though list of books and adding them to screen
@@ -91,7 +101,7 @@ function listBooks(){
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
-// When using a specific url ID
+// When using a specific url ID on search screen
 function moreInfo(event) {
     if (event.target.id === "") {
         let selectedBookLink = bookList[event.currentTarget.id]
@@ -101,6 +111,8 @@ function moreInfo(event) {
         promise.then(
             (Data) => {
                 currentEventId = event.currentTarget.id;
+                currentSelfLink = selectedBookLink
+
                 updateScreenInformation(Data)
             },
             (Error) => {
@@ -115,6 +127,7 @@ function moreInfo(event) {
         promise.then(
             (Data) => {
                 currentEventId = event.currentTarget.id;
+                currentSelfLink = selectedBookLink
                 updateScreenInformation(Data)
             },
             (Error) => {
@@ -169,16 +182,17 @@ function revealSearchMenu() {
 }
 
 //////////////////////////////////// TO DO ////////////////////////////////////////////
-
+// shelfObjects
 // shelfName: {"url_ID": [BookTitle, descripion]}
-// Creating a new shelf
-function createShelf(event) {
-    event.preventDefault();
-    let shelfName = $frequentLocations.shelfCreationBox.val()
-    shelfObjects[`${shelfName}`] = {};
-    updateDropdownList()
-}
 
+// Adding book to Shelf
+function addBookToShelf(event) {
+    event.preventDefault();
+    let shelfToStore = $frequentLocations.shelfAddDropdown.val()
+    shelfObjects[`${shelfToStore}`][`${currentSelfLink}`] = [$frequentLocations.searchTitle.text(), descriptionList[currentEventId]];
+    console.log(shelfObjects);
+    
+}
 
 /* ~~~~~~~~~~~~~~~~~~~~ Assigning The Click Listeners ~~~~~~~~~~~~~~~~~~~~ */
 // Event listener on the search box to look up book results
@@ -189,6 +203,8 @@ $frequentLocations.bookSearchButton.on("click", revealSearchMenu)
 $frequentLocations.shelfCatalogButton.on("click", revealCatalogMenu)
 // Event listener for create shelf button
 $frequentLocations.shelfCreationForm.on("submit", createShelf);
+// Event listener for book storing
+$frequentLocations.addForm.on("submit", addBookToShelf)
 
 
 /* ~~~~~~~~~~~~~~~~~~~~ Initializes Screen to Proper Conditions ~~~~~~~~~~~~~~~~~~~~ */
@@ -204,3 +220,6 @@ function initializeScreen() {
 
 // Calls for the function above
 initializeScreen();
+
+
+
