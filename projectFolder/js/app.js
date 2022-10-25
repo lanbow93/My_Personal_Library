@@ -126,15 +126,18 @@ function listBookStored(event){
     let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`]
     // Initializes counter that will be used to give each element a unique ID
     counter = 0;
+    
      for (let bookID in selectedShelf) {
         let bookInformation = selectedShelf[`${bookID}`]
+        let strBookID = `${bookID}`;
         if (typeof(bookInformation[1]) === "string") {
-            $frequentLocations.shelfResults.append(`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1]}</li>`)
+            $frequentLocations.shelfResults.append(`<li id="s${strBookID}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1]}</li>`)
         } else {
-            $frequentLocations.shelfResults.append(`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
+            $frequentLocations.shelfResults.append(`<li id="s${strBookID}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
         }
         counter++
     }
+    $("li").on("click", bookBreakdown)
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
@@ -220,8 +223,28 @@ function revealSearchMenu() {
 
 //////////////////////////////////// TO DO ////////////////////////////////////////////
 // shelfObjects
-// shelfName: {"url_ID": [BookTitle, descripion]}
+// shelfName: {"url_ID": [BookTitle, Author(s), descripion]}
 // (`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
+
+function bookBreakdown(event) {
+    let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`];
+    let selectedBook = event.currentTarget.id;
+    let infoArray = selectedShelf[selectedBook.slice(1)]
+
+    shelfPromise = $.ajax({
+        url: `https://www.googleapis.com/books/v1/volumes/${selectedBook.slice(1)}`
+    });
+    
+    shelfPromise.then(
+        (data) => {
+            console.log(data);
+        },
+        (error) => {
+            console.log(error);
+        }
+    )
+    
+}
 
 
 /* ~~~~~~~~~~~~~~~~~~~~ Assigning The Click Listeners ~~~~~~~~~~~~~~~~~~~~ */
