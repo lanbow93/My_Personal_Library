@@ -1,6 +1,6 @@
 /* ~~~~~~~~~~~~~~~~~~~~ Bugs Discovered - To Fix ~~~~~~~~~~~~~~~~~~~~ */
 // Sometimes no thumbnail
-
+// Sometimes description is short and doesn't need ...
 
 // https://www.googleapis.com/books/v1/volumes?q={search+terms} << Find book by search terms
 // https://www.googleapis.com/books/v1/volumes/YJjdtQEACAAJ << Find book by ID
@@ -14,6 +14,7 @@ let bookShelf;
 let currentEventId;
 let currentSelfLink;
 let currentAuthor;
+let shelfBookID;
 let shelfObjects = {
     defaultName: {"kLAoswEACAAJ": ["Harry Potter and the Cursed Child", "J. K. Rowling", `The official playscript of the original West End production of Harry Potter and the Cursed Child. It was always difficult being Harry Potter and it isn't much easier now that he is an overworked employee of the Ministry of Magic, a husband, and father of three school-age children. While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places. The playscript for Harry Potter and the Cursed Child was originally released as a 'special rehearsal edition' alongside the opening of Jack Thorne's play in London's West End in summer 2016. Based on an original story by J.K. Rowling, John Tiffany and Jack Thorne, the play opened to rapturous reviews from theatregoers and critics alike, while the official playscript became an immediate global bestseller. This revised paperback edition updates the 'special rehearsal edition' with the conclusive and final dialogue from the play, which has subtly changed since its rehearsals, as well as a conversation piece between director John Tiffany and writer Jack Thorne, who share stories and insights about reading playscripts. This edition also includes useful background information including the Potter family tree and a timeline of events from the wizarding world prior to the beginning of Harry Potter and the Cursed Child.`]},
 
@@ -43,8 +44,13 @@ const $frequentLocations = {
     shelfResults: $("#shelfResults ul"),
     shelfSelectionForm: $("#shelfSelectionForm"),
     shelfAddDropdown: $("#addDropdown"),
-    listShelfDropdown: $("#addShelfDropdown")
-
+    listShelfDropdown: $("#addShelfDropdown"),
+    catalogThumbnail: $("#catalogThumbnail"),
+    shelfTitleLabel: $("#shelfTitleLabel"),
+    shelfSubtitleLabel: $("#shelfSubtitleLabel"),
+    shelfAuthorLabel: $("#shelfAuthorLabel"),
+    shelfDescriptionLabel: $("#shelfDescriptionLabel"),
+    removeButton: $("#removeButton")
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ Functions To Control Data & Change Screen ~~~~~~~~~~~~~~~~~~~~ */
@@ -74,6 +80,7 @@ function updateScreenInformation(bookObj){
     console.log(currentAuthor);
     } else {
         $frequentLocations.searchAuthor.text("Unknown")
+        currentAuthor = "Unknown"
     }
 }
 
@@ -111,8 +118,7 @@ function addBookToShelf(event) {
     event.preventDefault();
     let shelfToStore = $frequentLocations.shelfAddDropdown.val()
     shelfObjects[`${shelfToStore}`][`${currentSelfLink}`] = [$frequentLocations.searchTitle.text(), currentAuthor, descriptionList[currentEventId]];
-
-    console.log(shelfObjects);
+    console.log(shelfObjects); // Test To Remove /////////////////////////////////////////////////
     
 }
 
@@ -140,6 +146,24 @@ function listBookStored(event){
     $("li").on("click", bookBreakdown)
 }
 
+// Displaying book information from shelf
+function updateShelfDisplay(bookArray, bookCall) {
+    $frequentLocations.catalogThumbnail[0].src = bookCall.volumeInfo.imageLinks.smallThumbnail;
+    $frequentLocations.shelfTitleLabel.text(bookArray[0])
+    if (bookCall.volumeInfo.authors !== undefined) {
+         $frequentLocations.shelfAuthorLabel.text(bookCall.volumeInfo.authors.join(", "));
+    } else {
+        $frequentLocations.shelfAuthorLabel.text("Unknown")
+    }
+
+    if(bookCall.volumeInfo.subtitle === undefined) {
+        $frequentLocations.shelfSubtitleLabel.text("")
+    } else {
+        $frequentLocations.shelfSubtitleLabel.text(bookCall.volumeInfo.subtitle)
+    }
+    $frequentLocations.shelfDescriptionLabel.text(bookArray[2].split('').splice(0, 450).join('') + " ...")
+}
+
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
 // When using a specific url ID on search screen
 function moreInfo(event) {
@@ -152,7 +176,6 @@ function moreInfo(event) {
             (Data) => {
                 currentEventId = event.currentTarget.id;
                 currentSelfLink = selectedBookLink
-
                 updateScreenInformation(Data)
             },
             (Error) => {
@@ -197,6 +220,28 @@ function searchBook(event) {
     )
 }
 
+// Using specifc url from shelf menu
+function bookBreakdown(event) {
+    bookShelf = `${$frequentLocations.listShelfDropdown.val()}`
+    let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`];
+    let selectedBook = event.currentTarget.id;
+    let infoArray = selectedShelf[selectedBook.slice(1)]
+    shelfBookID = selectedBook.slice(1)
+    shelfPromise = $.ajax({
+        url: `https://www.googleapis.com/books/v1/volumes/${selectedBook.slice(1)}`
+    });    
+    shelfPromise.then(
+        (data) => {
+            console.log(data);
+            console.log(infoArray)
+            updateShelfDisplay(infoArray, data);
+            
+        },
+        (error) => {
+            console.log(error);
+        }
+    )
+}
 /* ~~~~~~~~~~~~~~~~~~~~ Timing and Effect of Screen Transitions ~~~~~~~~~~~~~~~~~~~~ */
 
 // When shelf Catalog button is clicked, changes to the screen
@@ -226,25 +271,10 @@ function revealSearchMenu() {
 // shelfName: {"url_ID": [BookTitle, Author(s), descripion]}
 // (`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
 
-function bookBreakdown(event) {
-    let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`];
-    let selectedBook = event.currentTarget.id;
-    let infoArray = selectedShelf[selectedBook.slice(1)]
 
-    shelfPromise = $.ajax({
-        url: `https://www.googleapis.com/books/v1/volumes/${selectedBook.slice(1)}`
-    });
-    
-    shelfPromise.then(
-        (data) => {
-            console.log(data);
-        },
-        (error) => {
-            console.log(error);
-        }
-    )
-    
-}
+
+
+
 
 
 /* ~~~~~~~~~~~~~~~~~~~~ Assigning The Click Listeners ~~~~~~~~~~~~~~~~~~~~ */
@@ -260,12 +290,18 @@ $frequentLocations.shelfCreationForm.on("submit", createShelf);
 $frequentLocations.addForm.on("submit", addBookToShelf)
 // Event Listener for displaying books on shelf
 $frequentLocations.shelfSelectionForm.on("submit", listBookStored)
+// If remove book from shelf is clicked
+$frequentLocations.removeButton.on("click", () => {
+    delete shelfObjects[bookShelf][shelfBookID]
+    console.log(shelfObjects);
+})
+
 
 /* ~~~~~~~~~~~~~~~~~~~~ Initializes Screen to Proper Conditions ~~~~~~~~~~~~~~~~~~~~ */
 // Example Pushes On Screen
 function initializeScreen() {
-    $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
-    $frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title that will be added to this shelf</span><br>Author: This will contain one author's name</li>`)
+    // $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
+    // $frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title that will be added to this shelf</span><br>Author: This will contain one author's name</li>`)
     //Initially hide shelf menu 
     $frequentLocations.shelfCatalogScreen.slideToggle()
     //$frequentLocations.bookSearchScreen.slideToggle()
