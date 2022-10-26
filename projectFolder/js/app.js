@@ -1,12 +1,10 @@
 /* ~~~~~~~~~~~~~~~~~~~~ Bugs Discovered - To Fix ~~~~~~~~~~~~~~~~~~~~ */
 // Sometimes no thumbnail (Search results & shelf display)
 // Sometimes description is short and doesn't need ... (Search results & shelf display)
-// After deleting still needs to auto refresh on the screen
 
 /* ~~~~~~~~~~~~~~~~~~~~ Nice to add  ~~~~~~~~~~~~~~~~~~~~ */
 // Adding modal popup window for full description
 // Adding in local storage to store books
-// Separate AJAX request from putting information on shelf display screen
 
 
 // https://www.googleapis.com/books/v1/volumes?q={search+terms} << Find book by search terms
@@ -131,7 +129,9 @@ function addBookToShelf(event) {
 
 // Displaying books in specific shelf
 function listBookStored(event){
-    event.preventDefault();
+    if (event !== undefined) {
+        event.preventDefault();
+    }
     // Clears out the current displayed results
     $frequentLocations.shelfResults.empty();
     
@@ -242,7 +242,6 @@ function bookBreakdown(event) {
             console.log(data);
             console.log(infoArray)
             updateShelfDisplay(infoArray, data);
-            
         },
         (error) => {
             console.log(error);
@@ -301,6 +300,7 @@ $frequentLocations.shelfSelectionForm.on("submit", listBookStored)
 $frequentLocations.removeButton.on("click", () => {
     delete shelfObjects[bookShelf][shelfBookID]
     console.log(shelfObjects);
+    listBookStored()
 })
 
 
