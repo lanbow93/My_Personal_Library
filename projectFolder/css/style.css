@@ -181,6 +181,9 @@ grid-template:
         display: flex;
         justify-content: space-between;
     }
+    #addShelfDropdown {
+        width: 100%;
+    }
     .navButton {
         font-size: 2vh;
         font-weight: bold;
