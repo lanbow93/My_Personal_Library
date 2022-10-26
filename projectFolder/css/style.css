@@ -36,7 +36,6 @@ body {
     display: grid;
     grid-area: 3 / 2 / 9 / 4;
     margin: 0;
-
 }
 
 #searchResults {
@@ -65,6 +64,7 @@ input{
 ul{
     align-self: flex-start;
     padding: 0;
+    width: 45vw;
 }
 li {
     margin-bottom: 2vh;
@@ -136,7 +136,7 @@ grid-template:
     display: grid;
     grid-area: 1 / 2 / 2 / 3;
     text-align: center;
-    width: 50%;
+    width: 45vw;
 }
 
 #addShelfDropdown, #addDropdown {
@@ -152,6 +152,7 @@ grid-template:
 #shelfThumbnail {
     display: grid;
     grid-area: 2 / 1 / 4 / 2;
+
 }
 
 #shelfResults {
