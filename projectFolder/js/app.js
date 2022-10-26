@@ -1,10 +1,8 @@
 /* ~~~~~~~~~~~~~~~~~~~~ Bugs Discovered - To Fix ~~~~~~~~~~~~~~~~~~~~ */
-// Sometimes no thumbnail (Search results & shelf display)
-// Sometimes description is short and doesn't need ... (Search results & shelf display)
+// Unable to delete shelves
 
 /* ~~~~~~~~~~~~~~~~~~~~ Nice to add  ~~~~~~~~~~~~~~~~~~~~ */
 // Adding modal popup window for fav books
-// Adding in local storage to store books
 
 
 // https://www.googleapis.com/books/v1/volumes?q={search+terms} << Find book by search terms
@@ -79,9 +77,22 @@ function updateDropdownList () {
 
 // Updating the area with full book information
 function updateScreenInformation(bookObj){
-    $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
+    if (bookObj.volumeInfo.imageLinks) {
+        $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
+    } else {
+        $frequentLocations.searchImage[0].src = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+    }
+    
     $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
-    $frequentLocations.searchDescription.text(descriptionList[currentEventId].split('').splice(0, 450).join('') + " ...") // Cutting down the description
+    if (descriptionList[currentEventId] && descriptionList[currentEventId].length > 450){
+        // Cutting down the description
+        console.log(descriptionList[currentEventId].length)
+        $frequentLocations.searchDescription.text(descriptionList[currentEventId].split('').splice(0, 450).join('') + " ...") 
+    } else if (descriptionList[currentEventId]) {
+        $frequentLocations.searchDescription.text(descriptionList[currentEventId])
+    } else {
+        $frequentLocations.searchDescription.text("NO DESCRIPTION AVAILABLE")
+    }
     // If subtitle returns undefined
     if(bookObj.volumeInfo.subtitle !== undefined) {
         $frequentLocations.searchSubtitle.text(bookObj.volumeInfo.subtitle)
