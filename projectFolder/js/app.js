@@ -178,7 +178,11 @@ function listBookStored(event){
 
 // Displaying book information from shelf
 function updateShelfDisplay(bookArray, bookCall) {
-    $frequentLocations.catalogThumbnail[0].src = bookCall.volumeInfo.imageLinks.smallThumbnail;
+    if (bookCall.volumeInfo.imageLinks) {
+        $frequentLocations.catalogThumbnail[0].src = bookCall.volumeInfo.imageLinks.smallThumbnail;
+    } else {
+        $frequentLocations.catalogThumbnail[0].src = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+    }
     $frequentLocations.shelfTitleLabel.text(bookArray[0])
     if (bookCall.volumeInfo.authors !== undefined) {
          $frequentLocations.shelfAuthorLabel.text(bookCall.volumeInfo.authors.join(", "));
@@ -191,7 +195,15 @@ function updateShelfDisplay(bookArray, bookCall) {
     } else {
         $frequentLocations.shelfSubtitleLabel.text(bookCall.volumeInfo.subtitle)
     }
-    $frequentLocations.shelfDescriptionLabel.text(bookArray[2].split('').splice(0, 450).join('') + " ...")
+
+    if(bookArray[2] === null){
+        $frequentLocations.shelfDescriptionLabel.text("NO DESCRIPTION AVAILABLE")
+    } else if(bookArray[2].length > 450) {
+        $frequentLocations.shelfDescriptionLabel.text(bookArray[2].split('').splice(0, 450).join('') + " ...")
+    } else {
+        $frequentLocations.shelfDescriptionLabel.text(bookArray[2])
+    }
+    
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
