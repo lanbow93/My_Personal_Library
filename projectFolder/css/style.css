@@ -6,6 +6,8 @@ body {
     font-family: Arial;
     background-color:rgb(221, 215, 215);
     grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .0625fr 1fr 1fr .0625fr;
+    font-family: 'Oleo Script', cursive;
+
 }
 
 
@@ -14,6 +16,10 @@ body {
     display: grid;
     grid-area: 1 / 2 / 2 / 4;
     text-align: center;
+
+}
+h1 {
+    margin: 0;
 }
 
 #navMenu {
@@ -124,14 +130,15 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none;    
+    display: none;
+    font-size: 2vw;    
 }
 
 #modalText {
     display: flex;
 
-    background-color: white;
-    font-size: 80%;
+    background-color:rgb(221, 215, 215);
+    
     flex-direction: column;
 }
 
@@ -140,8 +147,8 @@ label {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 50vw;
-    width: 50vw;
+    height: 45vw;
+    width: 45vw;
 }
 
 #bar {
@@ -194,6 +201,7 @@ label {
 #shelfResults {
     display: grid;
     grid-area: 2 / 2 / 7 / 2;
+    width: 45vw;
 }
 
 #shelfBookInformation {

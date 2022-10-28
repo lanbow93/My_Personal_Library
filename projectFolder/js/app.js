@@ -118,10 +118,17 @@ function updateScreenInformation(bookObj){
 // Creating a new shelf
 function createShelf(event) {
     event.preventDefault();
-    let shelfName = $frequentLocations.shelfCreationBox.val()
-    shelfObjects[`${shelfName}`] = {};
-    storeToLocal();
-    updateDropdownList()
+
+    if ($frequentLocations.shelfCreationBox.val() == "") {
+        $frequentLocations.errorCode.text("120")
+        $frequentLocations.errorMessage.text("Shelf name was blank");
+        $frequentLocations.modalSection.css('display', 'flex');
+    } else {
+        let shelfName = $frequentLocations.shelfCreationBox.val()
+        shelfObjects[`${shelfName}`] = {};
+        storeToLocal();
+        updateDropdownList()
+    }
 }
 
 // Iterating though list of books and adding them to screen
