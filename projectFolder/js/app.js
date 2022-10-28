@@ -53,7 +53,8 @@ const $frequentLocations = {
     removeButton: $("#removeButton"),
     modalSection: $("#modalDiv"),
     errorCode: $("#errorCode"),
-    errorMessage: $("#errorMessage")
+    errorMessage: $("#errorMessage"),
+    quit: $("#quit")
 
 }
 
@@ -343,7 +344,7 @@ $frequentLocations.removeButton.on("click", () => {
     storeToLocal();
     listBookStored();
 })
-
+$frequentLocations.quit.on("click", (event) => $frequentLocations.modalSection.css('display', 'none') );
 
 /* ~~~~~~~~~~~~~~~~~~~~ Initializes Screen to Proper Conditions ~~~~~~~~~~~~~~~~~~~~ */
 // Example Pushes On Screen
