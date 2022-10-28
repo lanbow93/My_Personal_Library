@@ -50,7 +50,11 @@ const $frequentLocations = {
     shelfSubtitleLabel: $("#shelfSubtitleLabel"),
     shelfAuthorLabel: $("#shelfAuthorLabel"),
     shelfDescriptionLabel: $("#shelfDescriptionLabel"),
-    removeButton: $("#removeButton")
+    removeButton: $("#removeButton"),
+    modalSection: $("#modalDiv"),
+    errorCode: $("#errorCode"),
+    errorMessage: $("#errorMessage")
+
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ Functions To Control Data & Change Screen ~~~~~~~~~~~~~~~~~~~~ */
@@ -258,6 +262,10 @@ function searchBook(event) {
         },
         (error) => {
             console.log(error)
+            const errorInformation = JSON.parse(error.responseText)
+            $frequentLocations.errorCode.text(errorInformation.error.code)
+            $frequentLocations.errorMessage.text(errorInformation.error.message)
+            $frequentLocations.modalSection.css("display", "flex")
         }
     )
 }

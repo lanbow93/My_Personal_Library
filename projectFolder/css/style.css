@@ -113,6 +113,30 @@ select {
 label {
     font-size: 3vh;
 }
+/* This */
+#modalDiv {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;    
+}
+
+#modalText {
+    display: flex;
+    height: 50vw;
+    width: 50vw;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 80%;
+    flex-direction: column;
+}
 
 /* BOOK SEARCH MENU ABOVE COMPLETED */
 /* 
