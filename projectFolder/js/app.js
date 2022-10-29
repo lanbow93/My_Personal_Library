@@ -276,9 +276,7 @@ function searchBook(event) {
                 bookData = data
                 listBooks();
                 $("li").on("click", moreInfo)
-            }
-            
-            
+            } 
         },
         (error) => {
             console.log(error)
@@ -331,15 +329,9 @@ function revealSearchMenu() {
     $frequentLocations.windowStatus.text("Book Search")
 }
 
-//////////////////////////////////// TO DO ////////////////////////////////////////////
-// shelfObjects
-// shelfName: {"url_ID": [BookTitle, Author(s), descripion]}
-// (`<li id="s${counter}">Title: <span class='bookTitle'>${bookInformation[0]}</span><br>Author: ${bookInformation[1][0]}</li>`)
-
-
-
-
 /* ~~~~~~~~~~~~~~~~~~~~ Assigning The Click Listeners ~~~~~~~~~~~~~~~~~~~~ */
+//Click listener to close the modal
+$frequentLocations.quit.on("click", (event) => $frequentLocations.modalSection.css('display', 'none') );
 // Event listener on the search box to look up book results
 $frequentLocations.searchForm.on("submit", searchBook);
 // Click listener for Search button slide toggle
@@ -354,23 +346,16 @@ $frequentLocations.addForm.on("submit", addBookToShelf)
 $frequentLocations.shelfSelectionForm.on("submit", listBookStored)
 // If remove book from shelf is clicked
 $frequentLocations.removeButton.on("click", () => {
+    updateModal("Confirmation",`The book "${shelfObjects[bookShelf][shelfBookID][0]}" has been removed from shelf "${bookShelf}"`)
     delete shelfObjects[bookShelf][shelfBookID]
     storeToLocal();
     listBookStored();
 })
-$frequentLocations.quit.on("click", (event) => $frequentLocations.modalSection.css('display', 'none') );
 
 /* ~~~~~~~~~~~~~~~~~~~~ Initializes Screen to Proper Conditions ~~~~~~~~~~~~~~~~~~~~ */
-// Example Pushes On Screen
 function initializeScreen() {
-    // $frequentLocations.searchResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title</span><br>Author: This will contain one author's name</li>`)
-    // $frequentLocations.shelfResults.append(`<li>Title: <span class='bookTitle'>This will be filled by a book title that will be added to this shelf</span><br>Author: This will contain one author's name</li>`)
-    //Initially hide shelf menu 
     $frequentLocations.shelfCatalogScreen.slideToggle()
-    //$frequentLocations.bookSearchScreen.slideToggle()
     retrieveFromLocal()
     updateDropdownList()
 }
-
-// Calls for the function above
 initializeScreen();

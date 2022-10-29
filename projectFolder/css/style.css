@@ -1,13 +1,12 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;  /*viewport height*/
+    height: 100vh;
     display: grid;
     font-family: Arial;
     background-color:rgb(221, 215, 215);
     grid-template: .5fr .5fr 1fr 1fr 1fr 1fr 1fr 1fr .125fr / .0625fr 1fr 1fr .0625fr;
     font-family: 'Oleo Script', cursive;
-
 }
 
 #title {
@@ -238,6 +237,5 @@ label {
         width: 100vw;
         font-size: 3vh;
     }
-
   }
 
