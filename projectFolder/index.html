@@ -12,7 +12,6 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="./js/app.js" defer></script>
-    
 </head>
 <body>
     <div id="title">
@@ -38,7 +37,7 @@
             </form>
         </div>
         <div id="thumbnail">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWkdM-mwPvILWpiEA8wsDwJ6lFOpI-6ixCDQ&usqp=CAU" alt="thumbnail image of the book">
+            <img src="https://cdn1.iconfinder.com/data/icons/customer-service-30/48/15-128.png" alt="thumbnail image of the book">
         </div>
         <div id="bookInformation">
             <div id="addBookDetails">
@@ -58,13 +57,13 @@
         </div>
     </div>
 <!-- Below this point is the Shelf Catalog Screen -->
-
     <div id="shelfCatalogMenu">
         <div id="createShelfForm">
             <p>Create A Shelf</p>
             <form id="shelfForm">
                 <input type="text" placeholder="Enter Shelf Name" id="shelfCreateBox">
-                <input type="submit" value="Create">
+                <input type="submit" id="createShelf" value="Create">
+                <input type="submit" id="deleteShelf" value="Delete">
             </form>
         </div>
         <div id="shelfSelectForm">
@@ -75,7 +74,7 @@
             </form>
         </div>
         <div id="shelfThumbnail">
-            <img id="catalogThumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWkdM-mwPvILWpiEA8wsDwJ6lFOpI-6ixCDQ&usqp=CAU" alt="thumbnail image of the book">
+            <img id="catalogThumbnail" src="https://cdn1.iconfinder.com/data/icons/customer-service-30/48/15-128.png" alt="thumbnail image of the book">
         </div>
         <div id="shelfResults">
             <ul> 
@@ -100,9 +99,8 @@
             <button id="quit">X</button>
         </div>
         <div id="content">
-            <h1>Error: <span id="errorCode">Unknown</span></h1>
+            <h1><span id="errorCode">Unknown</span></h1>
             <p id="errorMessage">You have done an operation that was invalid</p>
-            
         </div>
     </div>
 </body>

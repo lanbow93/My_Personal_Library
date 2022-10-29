@@ -1,13 +1,3 @@
-/* ~~~~~~~~~~~~~~~~~~~~ Bugs Discovered - To Fix ~~~~~~~~~~~~~~~~~~~~ */
-// Unable to delete shelves
-
-/* ~~~~~~~~~~~~~~~~~~~~ Nice to add  ~~~~~~~~~~~~~~~~~~~~ */
-// Adding modal popup window for fav books
-
-
-// https://www.googleapis.com/books/v1/volumes?q={search+terms} << Find book by search terms
-// https://www.googleapis.com/books/v1/volumes/YJjdtQEACAAJ << Find book by ID
-
 /* ~~~~~~~~~~~~~~~~~~~~ Needed Global Variables ~~~~~~~~~~~~~~~~~~~~ */
 let userInput;
 let bookData;
@@ -59,6 +49,13 @@ const $frequentLocations = {
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ Functions To Control Data & Change Screen ~~~~~~~~~~~~~~~~~~~~ */
+
+function updateModal(banner,message) {
+    $frequentLocations.errorCode.text(banner)
+    $frequentLocations.errorMessage.text(message)
+    $frequentLocations.modalSection.css('display', 'flex')
+}
+
 // Storing and accessing from local storage
 function storeToLocal() {
     const jsonBookShelf = JSON.stringify(shelfObjects);
@@ -82,16 +79,16 @@ function updateDropdownList () {
 
 // Updating the area with full book information
 function updateScreenInformation(bookObj){
+    $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
+
+
     if (bookObj.volumeInfo.imageLinks) {
         $frequentLocations.searchImage[0].src = bookObj.volumeInfo.imageLinks.smallThumbnail
     } else {
-        $frequentLocations.searchImage[0].src = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+        $frequentLocations.searchImage[0].src = "https://www.homesforbolton.org.uk/choice/images/shared/noimagethumb.jpg"
     }
     
-    $frequentLocations.searchTitle.text(bookObj.volumeInfo.title)
     if (descriptionList[currentEventId] && descriptionList[currentEventId].length > 450){
-        // Cutting down the description
-        console.log(descriptionList[currentEventId].length)
         $frequentLocations.searchDescription.text(descriptionList[currentEventId].split('').splice(0, 450).join('') + " ...") 
     } else if (descriptionList[currentEventId]) {
         $frequentLocations.searchDescription.text(descriptionList[currentEventId])
@@ -108,7 +105,6 @@ function updateScreenInformation(bookObj){
     if (bookObj.volumeInfo.authors !== undefined) {
     $frequentLocations.searchAuthor.text(bookObj.volumeInfo.authors.join(", "))
     currentAuthor = bookObj.volumeInfo.authors
-    console.log(currentAuthor);
     } else {
         $frequentLocations.searchAuthor.text("Unknown")
         currentAuthor = "Unknown"
@@ -118,16 +114,30 @@ function updateScreenInformation(bookObj){
 // Creating a new shelf
 function createShelf(event) {
     event.preventDefault();
-
-    if ($frequentLocations.shelfCreationBox.val() == "") {
-        $frequentLocations.errorCode.text("120")
-        $frequentLocations.errorMessage.text("Shelf name was blank");
-        $frequentLocations.modalSection.css('display', 'flex');
-    } else {
-        let shelfName = $frequentLocations.shelfCreationBox.val()
-        shelfObjects[`${shelfName}`] = {};
-        storeToLocal();
-        updateDropdownList()
+    let clickedButton = event.originalEvent.submitter.id
+    if(clickedButton === "createShelf") {
+        if ($frequentLocations.shelfCreationBox.val() == "") {
+            updateModal("Error: 120", "Shelf name was blank")
+        } else {
+            let shelfName = $frequentLocations.shelfCreationBox.val()
+            $frequentLocations.shelfCreationBox.val("")
+            shelfObjects[`${shelfName}`] = {};
+            updateModal("Confirmation", `The shelf "${shelfName}" has been created`)
+            storeToLocal();
+            updateDropdownList()
+        }
+    } else if(clickedButton === "deleteShelf") {
+        if ($frequentLocations.shelfCreationBox.val() === "") {
+            updateModal("Error: 120", "Shelf name was blank")
+        } else if(!shelfObjects.hasOwnProperty($frequentLocations.shelfCreationBox.val())) {
+            updateModal("Error: 130", "The shelf you were trying to delete is not there. Check your spelling and try again.")
+        }else if (shelfObjects.hasOwnProperty($frequentLocations.shelfCreationBox.val()) ){
+            delete shelfObjects[$frequentLocations.shelfCreationBox.val()]
+            updateModal("Confirmation", `The shelf "${$frequentLocations.shelfCreationBox.val()}" has been deleted`)
+            $frequentLocations.shelfCreationBox.val("")
+            storeToLocal();
+            updateDropdownList()
+        }
     }
 }
 
@@ -157,9 +167,8 @@ function addBookToShelf(event) {
     event.preventDefault();
     let shelfToStore = $frequentLocations.shelfAddDropdown.val()
     shelfObjects[`${shelfToStore}`][`${currentSelfLink}`] = [$frequentLocations.searchTitle.text(), currentAuthor, descriptionList[currentEventId]];
+    updateModal("Confirmation", `"${$frequentLocations.searchTitle.text()}" has been added to the shelf "${shelfToStore}"`)
     storeToLocal();
-    console.log(shelfObjects); // Test To Remove /////////////////////////////////////////////////
-    
 }
 
 // Displaying books in specific shelf
@@ -169,12 +178,10 @@ function listBookStored(event){
     }
     // Clears out the current displayed results
     $frequentLocations.shelfResults.empty();
-    
     // Grabbing shelf name from dropdown and accessing its book objects
     let selectedShelf = shelfObjects[`${$frequentLocations.listShelfDropdown.val()}`]
     // Initializes counter that will be used to give each element a unique ID
     counter = 0;
-    
      for (let bookID in selectedShelf) {
         let bookInformation = selectedShelf[`${bookID}`]
         let strBookID = `${bookID}`;
@@ -193,7 +200,7 @@ function updateShelfDisplay(bookArray, bookCall) {
     if (bookCall.volumeInfo.imageLinks) {
         $frequentLocations.catalogThumbnail[0].src = bookCall.volumeInfo.imageLinks.smallThumbnail;
     } else {
-        $frequentLocations.catalogThumbnail[0].src = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+        $frequentLocations.catalogThumbnail[0].src = "https://www.homesforbolton.org.uk/choice/images/shared/noimagethumb.jpg";
     }
     $frequentLocations.shelfTitleLabel.text(bookArray[0])
     if (bookCall.volumeInfo.authors !== undefined) {
@@ -215,7 +222,6 @@ function updateShelfDisplay(bookArray, bookCall) {
     } else {
         $frequentLocations.shelfDescriptionLabel.text(bookArray[2])
     }
-    
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ AJAX Calls ~~~~~~~~~~~~~~~~~~~~ */
@@ -267,13 +273,12 @@ function searchBook(event) {
             bookData = data
             listBooks();
             $("li").on("click", moreInfo)
+            console.log(data);
         },
         (error) => {
             console.log(error)
             const errorInformation = JSON.parse(error.responseText)
-            $frequentLocations.errorCode.text(errorInformation.error.code)
-            $frequentLocations.errorMessage.text(errorInformation.error.message)
-            $frequentLocations.modalSection.css("display", "flex")
+            updateModal(("Error: " + errorInformation.error.code), errorInformation.error.message)
         }
     )
 }
@@ -290,8 +295,6 @@ function bookBreakdown(event) {
     });    
     shelfPromise.then(
         (data) => {
-            console.log(data);
-            console.log(infoArray)
             updateShelfDisplay(infoArray, data);
         },
         (error) => {
@@ -347,7 +350,6 @@ $frequentLocations.shelfSelectionForm.on("submit", listBookStored)
 // If remove book from shelf is clicked
 $frequentLocations.removeButton.on("click", () => {
     delete shelfObjects[bookShelf][shelfBookID]
-    console.log(shelfObjects);
     storeToLocal();
     listBookStored();
 })
