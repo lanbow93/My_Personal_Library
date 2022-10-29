@@ -217,7 +217,7 @@ label {
 #removeButton {
     font-size: 1.25vw;
 }
-#removeButton:hover {
+#removeButton:hover, #deleteShelf:hover {
     background-color: red;
     color: white;
 }
