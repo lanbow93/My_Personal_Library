@@ -233,6 +233,11 @@ label {
         font-size: 2vh;
         font-weight: bold;
     }
+    #content {
+        height: 100vw;
+        width: 100vw;
+        font-size: 3vh;
+    }
 
   }
 

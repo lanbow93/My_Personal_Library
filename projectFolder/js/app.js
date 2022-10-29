@@ -270,10 +270,15 @@ function searchBook(event) {
     })
     Promise.then(
         (data) => {
-            bookData = data
-            listBooks();
-            $("li").on("click", moreInfo)
-            console.log(data);
+            if(data.totalItems === 0) {
+                updateModal("Error: 188", "The terms you searched have zero results.")
+            } else {
+                bookData = data
+                listBooks();
+                $("li").on("click", moreInfo)
+            }
+            
+            
         },
         (error) => {
             console.log(error)
